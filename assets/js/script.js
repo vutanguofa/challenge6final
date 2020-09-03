@@ -5,95 +5,278 @@ function citySearch() {
     var searchCity = document.querySelector('#searchCity').value;
 
     // Make a `fetch` request concatenating the `searchCity` to the query URL
-    // Remember to add your API key at the end
+    // Adding API key to the end of the URL
     var key = '4d2fb1b99bcf745d9291a380bc0ac375';
     fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + searchCity + ',us' + '&appid=' + key)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            //https://openweathermap.org/weather-data
-
+            console.dir(data);
             //city name
-            $("#cityName").append("<div>" + "City: " + data.city.name + "</div>").addClass("style");
+            $("#cityName").append("<div>" + "City: " + data.city.name + "</div>");
 
             //Forecast for Day 1
-            //the date
-            $("#date1").append("<div>" + "The date is, " + data.list[0].dt_txt + "</div>").addClass("style");
-            //the humidity
-            $("#humidity1").append("<div>" + "The humidty is, " + data.list[0].main.humidity + "</div>").addClass("style");
-            //the temperature
-            $("#temp1").append("<div>" + "The temperature is, " + data.list[0].main.temp + "</div>").addClass("style");
-            //the wind speed
-            $("#wind1").append("<div>" + "The wind speed is, " + data.list[0].wind.speed + "</div>").addClass("style");
-            //an icon representation of weather conditions
+            $("#foreCast1").append("<div>" + "</div>").addClass("col-md-4");
+            $("#foreCast1").append("<div>" + "</div>").addClass("card mt-2");
+            $("#foreCast1").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast1").append("<h4>" + data.list[0].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
+
+            //Switch statement for icon representation of weather condition
+            var conditionsD1 = data.list[0].weather[0].description;
+            switch (conditionsD1) {
+                case 'clear sky':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/01d.png" + "\">");
+                    break;
+                case 'few clouds':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/02d.png" + "\">");
+                    break;
+                case 'scattered clouds':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/03d.png" + "\">");
+                    break;
+                case 'broken clouds':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/04d.png" + "\">");
+                    break;
+                case 'shower rain':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/09d.png" + "\">");
+                    break;
+                case 'rain':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/10d.png" + "\">");
+                    break;
+                case 'thunderstorm':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/11d.png" + "\">");
+                    break;
+                case 'snow':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/13d.png" + "\">");
+                    break;
+                case 'mist':
+                    $("#foreCast1").append("<img src=\"" + "http://openweathermap.org/img/wn/50d.png" + "\">");
+                    break;
+                default:
+                    $("#foreCast1").append("<img src=\"" + "./assets/images/zombies.jpg" + "\">");
+                    break;
+            };
+            $("#foreCast1").append("<h5>" + "The weather is, " + data.list[0].weather[0].description + "<br />" + "</h5>").addClass("card-title");
+            $("#foreCast1").append("<p>" +
+                "The humidity is, " + data.list[0].main.humidity + "<br />" +
+                "The temperature is, " + data.list[0].main.temp + "<br />" +
+                "The wind speed is, " + data.list[0].wind.speed + "<br />" +
+                "</p>").addClass("card-text");
             //and the UV index
+            //End of forecast for Day 1
 
             //Forecast for Day 2
-            //the date
-            $("#date2").append("<div>" + "The date is, " + data.list[1].dt_txt + "</div>").addClass("style");
-            //the humidity
-            $("#humidity2").append("<div>" + "The humidty is, " + data.list[1].main.humidity + "</div>").addClass("style");
-            //the temperature
-            $("#temp2").append("<div>" + "The temperature is, " + data.list[1].main.temp + "</div>").addClass("style");
-            //the wind speed
-            $("#wind2").append("<div>" + "The wind speed is, " + data.list[1].wind.speed + "</div>").addClass("style");
-            //an icon representation of weather conditions
+            $("#foreCast2").append("<div>" + "</div>").addClass("col-md-4");
+            $("#foreCast2").append("<div>" + "</div>").addClass("card mt-2");
+            $("#foreCast2").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast2").append("<h4>" + data.list[1].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
+
+            //Switch statement for icon representation of weather condition
+            var conditionsD2 = data.list[1].weather[0].description;
+            switch (conditionsD2) {
+                case 'clear sky':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/01d.png" + "\">");
+                    break;
+                case 'few clouds':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/02d.png" + "\">");
+                    break;
+                case 'scattered clouds':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/03d.png" + "\">");
+                    break;
+                case 'broken clouds':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/04d.png" + "\">");
+                    break;
+                case 'shower rain':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/09d.png" + "\">");
+                    break;
+                case 'rain':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/10d.png" + "\">");
+                    break;
+                case 'thunderstorm':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/11d.png" + "\">");
+                    break;
+                case 'snow':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/13d.png" + "\">");
+                    break;
+                case 'mist':
+                    $("#foreCast2").append("<img src=\"" + "http://openweathermap.org/img/wn/50d.png" + "\">");
+                    break;
+                default:
+                    $("#foreCast2").append("<img src=\"" + "./assets/images/zombies.jpg" + "\">");
+                    break;
+            };
+
+            $("#foreCast2").append("<h5>" + "The weather is, " + data.list[1].weather[0].description + "<br />" + "</h5>").addClass("card-title");
+            $("#foreCast2").append("<p>" +
+                "The humidity is, " + data.list[1].main.humidity + "<br />" +
+                "The temperature is, " + data.list[1].main.temp + "<br />" +
+                "The wind speed is, " + data.list[1].wind.speed + "<br />" +
+                "</p>").addClass("card-text");
             //and the UV index
+            //End of forecast for Day 2
 
             //Forecast for Day 3
-            //the date
-            $("#date3").append("<div>" + "The date is, " + data.list[2].dt_txt + "</div>").addClass("style");
-            //the humidity
-            $("#humidity3").append("<div>" + "The humidty is, " + data.list[2].main.humidity + "</div>").addClass("style");
-            //the temperature
-            $("#temp3").append("<div>" + "The temperature is, " + data.list[2].main.temp + "</div>").addClass("style");
-            //the wind speed
-            $("#wind3").append("<div>" + "The wind speed is, " + data.list[2].wind.speed + "</div>").addClass("style");
-            //an icon representation of weather conditions
+            $("#foreCast3").append("<div>" + "</div>").addClass("col-md-4");
+            $("#foreCast3").append("<div>" + "</div>").addClass("card mt-2");
+            $("#foreCast3").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast3").append("<h4>" + data.list[2].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
+
+            //Switch statement for icon representation of weather condition
+            var conditionsD3 = data.list[2].weather[0].description;
+            switch (conditionsD3) {
+                case 'clear sky':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/01d.png" + "\">");
+                    break;
+                case 'few clouds':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/02d.png" + "\">");
+                    break;
+                case 'scattered clouds':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/03d.png" + "\">");
+                    break;
+                case 'broken clouds':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/04d.png" + "\">");
+                    break;
+                case 'shower rain':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/09d.png" + "\">");
+                    break;
+                case 'rain':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/10d.png" + "\">");
+                    break;
+                case 'thunderstorm':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/11d.png" + "\">");
+                    break;
+                case 'snow':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/13d.png" + "\">");
+                    break;
+                case 'mist':
+                    $("#foreCast3").append("<img src=\"" + "http://openweathermap.org/img/wn/50d.png" + "\">");
+                    break;
+                default:
+                    $("#foreCast3").append("<img src=\"" + "./assets/images/zombies.jpg" + "\">");
+                    break;
+            };
+
+            $("#foreCast3").append("<h5>" + "The weather is, " + data.list[2].weather[0].description + "<br />" + "</h5>").addClass("card-title");
+            $("#foreCast3").append("<p>" +
+                "The humidity is, " + data.list[2].main.humidity + "<br />" +
+                "The temperature is, " + data.list[2].main.temp + "<br />" +
+                "The wind speed is, " + data.list[2].wind.speed + "<br />" +
+                "</p>").addClass("card-text");
             //and the UV index
+            //End of forecast for Day 3
 
             //Forecast for Day 4
-            //the date
-            $("#date4").append("<div>" + "The date is, " + data.list[3].dt_txt + "</div>").addClass("style");
-            //the humidity
-            $("#humidity4").append("<div>" + "The humidty is, " + data.list[3].main.humidity + "</div>").addClass("style");
-            //the temperature
-            $("#temp4").append("<div>" + "The temperature is, " + data.list[3].main.temp + "</div>").addClass("style");
-            //the wind speed
-            $("#wind4").append("<div>" + "The wind speed is, " + data.list[3].wind.speed + "</div>").addClass("style");
-            //an icon representation of weather conditions
+            $("#foreCast4").append("<div>" + "</div>").addClass("col-md-4");
+            $("#foreCast4").append("<div>" + "</div>").addClass("card mt-2");
+            $("#foreCast4").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast4").append("<h4>" + data.list[3].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
+
+            //Switch statement for icon representation of weather condition
+            var conditionsD4 = data.list[3].weather[0].description;
+            switch (conditionsD4) {
+                case 'clear sky':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/01d.png" + "\">");
+                    break;
+                case 'few clouds':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/02d.png" + "\">");
+                    break;
+                case 'scattered clouds':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/03d.png" + "\">");
+                    break;
+                case 'broken clouds':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/04d.png" + "\">");
+                    break;
+                case 'shower rain':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/09d.png" + "\">");
+                    break;
+                case 'rain':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/10d.png" + "\">");
+                    break;
+                case 'thunderstorm':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/11d.png" + "\">");
+                    break;
+                case 'snow':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/13d.png" + "\">");
+                    break;
+                case 'mist':
+                    $("#foreCast4").append("<img src=\"" + "http://openweathermap.org/img/wn/50d.png" + "\">");
+                    break;
+                default:
+                    $("#foreCast4").append("<img src=\"" + "./assets/images/zombies.jpg" + "\">");
+                    break;
+            };
+
+            $("#foreCast4").append("<h5>" + "The weather is, " + data.list[3].weather[0].description + "<br />" + "</h5>").addClass("card-title");
+            $("#foreCast4").append("<p>" +
+                "The humidity is, " + data.list[3].main.humidity + "<br />" +
+                "The temperature is, " + data.list[3].main.temp + "<br />" +
+                "The wind speed is, " + data.list[3].wind.speed + "<br />" +
+                "</p>").addClass("card-text");
             //and the UV index
+            //End of forecast for Day 4
 
             //Forecast for Day 5
-            //the date
-            $("#date5").append("<div>" + "The date is, " + data.list[4].dt_txt + "</div>").addClass("style");
-            //the humidity
-            $("#humidity5").append("<div>" + "The humidty is, " + data.list[4].main.humidity + "</div>").addClass("style");
-            //the temperature
-            $("#temp5").append("<div>" + "The temperature is, " + data.list[4].main.temp + "</div>").addClass("style");
-            //the wind speed
-            $("#wind5").append("<div>" + "The wind speed is, " + data.list[4].wind.speed + "</div>").addClass("style");
-            //an icon representation of weather conditions
+            $("#foreCast5").append("<div>" + "</div>").addClass("col-md-4");
+            $("#foreCast5").append("<div>" + "</div>").addClass("card mt-2");
+            $("#foreCast5").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast5").append("<h4>" + data.list[4].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
+            //Switch statement for icon representation of weather condition
+            var conditionsD5 = data.list[4].weather[0].description;
+            switch (conditionsD5) {
+                case 'clear sky':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/01d.png" + "\">");
+                    break;
+                case 'few clouds':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/02d.png" + "\">");
+                    break;
+                case 'scattered clouds':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/03d.png" + "\">");
+                    break;
+                case 'broken clouds':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/04d.png" + "\">");
+                    break;
+                case 'shower rain':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/09d.png" + "\">");
+                    break;
+                case 'rain':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/10d.png" + "\">");
+                    break;
+                case 'thunderstorm':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/11d.png" + "\">");
+                    break;
+                case 'snow':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/13d.png" + "\">");
+                    break;
+                case 'mist':
+                    $("#foreCast5").append("<img src=\"" + "http://openweathermap.org/img/wn/50d.png" + "\">");
+                    break;
+                default:
+                    $("#foreCast5").append("<img src=\"" + "./assets/images/zombies.jpg" + "\">");
+                    break;
+            };
+
+            $("#foreCast5").append("<h5>" + "The weather is, " + data.list[4].weather[0].description + "<br />" + "</h5>").addClass("card-title");
+            $("#foreCast5").append("<p>" +
+                "The humidity is, " + data.list[4].main.humidity + "<br />" +
+                "The temperature is, " + data.list[4].main.temp + "<br />" +
+                "The wind speed is, " + data.list[4].wind.speed + "<br />" +
+                "</p>").addClass("card-text");
             //and the UV index
-            console.dir(data);
-
-            /*
-var foreCastList = "";
-var i;
-for (i = 0; i < data.list.length; i += 8) {
-    foreCastList += "The forecast is: " + data.list[i] + "<br>";
-    console.log(document);
-}
-$("#foreCast").append("<div>" + foreCastList + "</div>").addClass("style");
-*/
-
+            //End of forecast for Day 5
         })
-        .catch(function () {
-            // catch any errors
+        .catch((error) => {
+            console.error('Error:', error);
         });
-}
+};
 
 document.getElementById("myBtn").addEventListener("click", function () {
     citySearch();
 });
+
+
+
+
+
+
+
+
