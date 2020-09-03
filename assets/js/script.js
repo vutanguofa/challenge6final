@@ -17,9 +17,7 @@ function citySearch() {
             $("#cityName").append("<div>" + "City: " + data.city.name + "</div>");
 
             //Forecast for Day 1
-            $("#foreCast1").append("<div>" + "</div>").addClass("col-md-4");
-            $("#foreCast1").append("<div>" + "</div>").addClass("card mt-2");
-            $("#foreCast1").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast1").addClass("col-md-4 card mt-2 card-body");
             $("#foreCast1").append("<h4>" + data.list[0].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
 
             //Switch statement for icon representation of weather condition
@@ -66,9 +64,7 @@ function citySearch() {
             //End of forecast for Day 1
 
             //Forecast for Day 2
-            $("#foreCast2").append("<div>" + "</div>").addClass("col-md-4");
-            $("#foreCast2").append("<div>" + "</div>").addClass("card mt-2");
-            $("#foreCast2").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast2").addClass("col-md-4 card mt-2 card-body");
             $("#foreCast2").append("<h4>" + data.list[1].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
 
             //Switch statement for icon representation of weather condition
@@ -116,9 +112,7 @@ function citySearch() {
             //End of forecast for Day 2
 
             //Forecast for Day 3
-            $("#foreCast3").append("<div>" + "</div>").addClass("col-md-4");
-            $("#foreCast3").append("<div>" + "</div>").addClass("card mt-2");
-            $("#foreCast3").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast3").addClass("col-md-4 card mt-2 card-body");
             $("#foreCast3").append("<h4>" + data.list[2].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
 
             //Switch statement for icon representation of weather condition
@@ -166,9 +160,7 @@ function citySearch() {
             //End of forecast for Day 3
 
             //Forecast for Day 4
-            $("#foreCast4").append("<div>" + "</div>").addClass("col-md-4");
-            $("#foreCast4").append("<div>" + "</div>").addClass("card mt-2");
-            $("#foreCast4").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast4").addClass("col-md-4 card mt-2 card-body");
             $("#foreCast4").append("<h4>" + data.list[3].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
 
             //Switch statement for icon representation of weather condition
@@ -216,9 +208,7 @@ function citySearch() {
             //End of forecast for Day 4
 
             //Forecast for Day 5
-            $("#foreCast5").append("<div>" + "</div>").addClass("col-md-4");
-            $("#foreCast5").append("<div>" + "</div>").addClass("card mt-2");
-            $("#foreCast5").append("<div>" + "</div>").addClass("card-body");
+            $("#foreCast5").addClass("col-md-4 card mt-2 card-body");
             $("#foreCast5").append("<h4>" + data.list[4].dt_txt + "<br />" + "<br />" + "</h4>").addClass("card-title");
             //Switch statement for icon representation of weather condition
             var conditionsD5 = data.list[4].weather[0].description;
