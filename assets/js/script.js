@@ -130,15 +130,15 @@ function citySearch() {
             document.getElementById("uvCondition").innerHTML =
                 "UV Index: " + getUvIndex;
 
-            if (getUvIndex <= 2) {
+            if (getUvIndex >= 0 || getUvIndex <= 2) {
                 console.log("favorable");
-                $("#conditionStyle").addClass("favorable");
+                $("#uvCondition").addClass("favorable");
             } else if(getUvIndex >= 3 && getUvIndex <=7) {
                 console.log("moderate");
-                $("#conditionStyle").addClass("moderate");
+                $("#uvCondition").addClass("moderate");
             } else {
                 console.log("severe");
-                $("#conditionStyle").addClass("severe");
+                $("#uvCondition").addClass("severe");
             };
 
 
