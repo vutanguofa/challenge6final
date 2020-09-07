@@ -23,8 +23,6 @@ function citySearch() {
             var speed1 = data.list[0].wind.speed;
             var lat = data.city.coord.lat;
             var lon = data.city.coord.lon;
-            console.log(lat);
-            console.log(lon);
 
             fetch('http://api.openweathermap.org/data/2.5/uvi?appid=' + key + '&lat=' + lat + '&lon=' + lon)
                 .then(function (response) {
@@ -33,8 +31,17 @@ function citySearch() {
                 .then(function (data) {
                     console.dir(data);
                     var uvIndex = data.value;
-                    localStorage.setItem("uvIndex", uvIndex);
-                    console.log(uvIndex);
+                    document.getElementById("uvCondition").innerHTML = "UV Index: " + uvIndex;
+                    if (uvIndex >= 0 || uvIndex <= 2) {
+                        console.log("favorable");
+                        $("#uvCondition").addClass("favorable");
+                    } else if (uvIndex >= 3 && uvIndex <= 7) {
+                        console.log("moderate");
+                        $("#uvCondition").addClass("moderate");
+                    } else {
+                        console.log("severe");
+                        $("#uvCondition").addClass("severe");
+                    };
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -125,23 +132,6 @@ function citySearch() {
                 "Temperature: " + temp1 + "<br />" +
                 "Wind Speed: " + speed1;
 
-
-            var getUvIndex = localStorage.getItem("uvIndex");
-            document.getElementById("uvCondition").innerHTML =
-                "UV Index: " + getUvIndex;
-
-            if (getUvIndex >= 0 || getUvIndex <= 2) {
-                console.log("favorable");
-                $("#uvCondition").addClass("favorable");
-            } else if(getUvIndex >= 3 && getUvIndex <=7) {
-                console.log("moderate");
-                $("#uvCondition").addClass("moderate");
-            } else {
-                console.log("severe");
-                $("#uvCondition").addClass("severe");
-            };
-
-
             //Forecast for Day 1
             //Switch statement for icon representation of weather condition
             var conditionsD1 = description1;
@@ -231,8 +221,6 @@ function citySearch() {
             localStorage.setItem("Humidity1", humidity1);
             localStorage.setItem("Temperature1", temp1);
             localStorage.setItem("Wind speed1", speed1);
-
-            //and the UV index
             //End of forecast for Day 1
 
             //Forecast for Day 2
@@ -330,8 +318,6 @@ function citySearch() {
             localStorage.setItem("Humidity2", humidity2);
             localStorage.setItem("Temperature2", temp2);
             localStorage.setItem("Wind speed2", speed2);
-
-            //and the UV index
             //End of forecast for Day 2
 
             //Forecast for Day 3
@@ -429,8 +415,6 @@ function citySearch() {
             localStorage.setItem("Humidity3", humidity3);
             localStorage.setItem("Temperature3", temp3);
             localStorage.setItem("Wind speed3", speed3);
-
-            //and the UV index
             //End of forecast for Day 3
 
             //Forecast for Day 4
@@ -528,8 +512,6 @@ function citySearch() {
             localStorage.setItem("Humidity4", humidity4);
             localStorage.setItem("Temperature4", temp4);
             localStorage.setItem("Wind speed4", speed4);
-
-            //and the UV index
             //End of forecast for Day 4
 
             //Forecast for Day 5
@@ -627,8 +609,6 @@ function citySearch() {
             localStorage.setItem("Humidity5", humidity5);
             localStorage.setItem("Temperature5", temp5);
             localStorage.setItem("Wind speed5", speed5);
-
-            //and the UV index
             //End of forecast for Day 5
 
         })
@@ -636,7 +616,6 @@ function citySearch() {
             console.error('Error:', error);
         });
 };
-
 
 /*
 document.getElementById("#prevCity").innerHTML = localStorage.getItem("City1");
