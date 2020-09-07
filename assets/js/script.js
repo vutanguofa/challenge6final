@@ -32,14 +32,11 @@ function citySearch() {
                     console.dir(data);
                     var uvIndex = data.value;
                     document.getElementById("uvCondition").innerHTML = "UV Index: " + uvIndex;
-                    if (uvIndex >= 0 || uvIndex <= 2) {
-                        console.log("favorable");
+                    if (uvIndex >= 0 && uvIndex <= 2) {
                         $("#uvCondition").addClass("favorable");
                     } else if (uvIndex >= 3 && uvIndex <= 7) {
-                        console.log("moderate");
                         $("#uvCondition").addClass("moderate");
                     } else {
-                        console.log("severe");
                         $("#uvCondition").addClass("severe");
                     };
                 })
