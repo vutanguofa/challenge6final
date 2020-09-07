@@ -6,7 +6,7 @@ This is a weather forecast application using a third party API (https://openweat
 
 ## Screenshot
 
-![challenge6final](https://user-images.githubusercontent.com/68674610/91503391-2ce64300-e87f-11ea-8372-a45168975f5c.png)
+![challenge6final](https://user-images.githubusercontent.com/68674610/92343983-0b086f80-f07a-11ea-925d-eac01c30d115.png)
 
 ## Link to deployed application
 

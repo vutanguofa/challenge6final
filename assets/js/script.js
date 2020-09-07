@@ -13,13 +13,32 @@ function citySearch() {
         })
         .then(function (data) {
             console.dir(data);
-            //city name
+
+            // Setting variables with respone object
             var searchedCity = data.city.name;
             var date1 = data.list[0].dt_txt;
             var description1 = data.list[0].weather[0].description;
             var humidity1 = data.list[0].main.humidity;
             var temp1 = data.list[0].main.temp;
             var speed1 = data.list[0].wind.speed;
+            var lat = data.city.coord.lat;
+            var lon = data.city.coord.lon;
+            console.log(lat);
+            console.log(lon);
+
+            fetch('http://api.openweathermap.org/data/2.5/uvi?appid=' + key + '&lat=' + lat + '&lon=' + lon)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.dir(data);
+                    var uvIndex = data.value;
+                    localStorage.setItem("uvIndex", uvIndex);
+                    console.log(uvIndex);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
 
             // Add to previous search list
             $("#prevSearch").prepend("<p>" + searchedCity + "</p>");
@@ -28,80 +47,178 @@ function citySearch() {
             var conditionsD1 = description1;
             switch (conditionsD1) {
                 case 'clear sky':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/01d.png\n" + "></center></p>");
+                    function currentIcon1() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/01d.png";
+                        $("#conditionStyle").addClass("favorable");
+                    };
+                    currentIcon1();
                     break;
                 case 'few clouds':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/02d.png\n" + "></center></p>");
+                    function currentIcon2() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/02d.png";
+                        $("#conditionStyle").addClass("favorable");
+                    };
+                    currentIcon2();
                     break;
                 case 'scattered clouds':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/03d.png\n" + "></center></p>");
+                    function currentIcon3() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/03d.png";
+                        $("#conditionStyle").addClass("moderate");
+                    };
+                    currentIcon3();
                     break;
                 case 'broken clouds':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/04d.png\n" + "></center></p>");
+                    function currentIcon4() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/04d.png";
+                        $("#conditionStyle").addClass("moderate");
+                    };
+                    currentIcon4();
                     break;
                 case 'shower rain':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/09d.png\n" + "></center></p>");
+                    function currentIcon5() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/09d.png";
+                        $("#conditionStyle").addClass("severe");
+                    };
+                    currentIcon5();
                     break;
                 case 'rain':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/10d.png\n" + "></center></p>");
+                    function currentIcon6() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/10d.png";
+                        $("#conditionStyle").addClass("moderate");
+                    };
+                    currentIcon6();
                     break;
                 case 'thunderstorm':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/11d.png\n" + "></center></p>");
+                    function currentIcon7() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/11d.png";
+                        $("#conditionStyle").addClass("severe");
+                    };
+                    currentIcon7();
                     break;
                 case 'snow':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/13d.png\n" + "></center></p>");
+                    function currentIcon8() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/13d.png";
+                        $("#conditionStyle").addClass("severe");
+                    };
+                    currentIcon8();
                     break;
                 case 'mist':
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/50d.png\n" + "></center></p>");
+                    function currentIcon9() {
+                        document.getElementById("currentIcon").src = "http://openweathermap.org/img/wn/50d.png";
+                        $("#conditionStyle").addClass("severe");
+                    };
+                    currentIcon9();
                     break;
                 default:
-                    $("#currentIcon").replaceWith("<p><center><img src=\n" + "./assets/images/zombies.jpg\n" + "></center></p>");
+                    function currentIcon10() {
+                        document.getElementById("currentIcon").src = "./assets/images/zombies.jpg";
+                        $("#conditionStyle").addClass("severe");
+                    };
+                    currentIcon10();
                     break;
             };
-            document.getElementById("#currentWeather").innerHTML =
+
+            document.getElementById("currentWeather").innerHTML =
                 searchedCity + " (" + date1 + ")" + "<br />" +
                 "Condition: " + description1 + "<br />" +
                 "Humidity: " + humidity1 + "<br />" +
                 "Temperature: " + temp1 + "<br />" +
                 "Wind Speed: " + speed1;
 
+
+            var getUvIndex = localStorage.getItem("uvIndex");
+            document.getElementById("uvCondition").innerHTML =
+                "UV Index: " + getUvIndex;
+
+            if (getUvIndex <= 2) {
+                console.log("favorable");
+                $("#conditionStyle").addClass("favorable");
+            } else if(getUvIndex >= 3 && getUvIndex <=7) {
+                console.log("moderate");
+                $("#conditionStyle").addClass("moderate");
+            } else {
+                console.log("severe");
+                $("#conditionStyle").addClass("severe");
+            };
+
+
             //Forecast for Day 1
             //Switch statement for icon representation of weather condition
             var conditionsD1 = description1;
             switch (conditionsD1) {
                 case 'clear sky':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/01d.png\n" + "></center></p>");
+                    function currentIcon1() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/01d.png";
+                        $("#conditionStyle1").addClass("favorable");
+                    };
+                    currentIcon1();
                     break;
                 case 'few clouds':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/02d.png\n" + "></center></p>");
+                    function currentIcon2() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/02d.png";
+                        $("#conditionStyle1").addClass("favorable");
+                    };
+                    currentIcon2();
                     break;
                 case 'scattered clouds':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/03d.png\n" + "></center></p>");
+                    function currentIcon3() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/03d.png";
+                        $("#conditionStyle1").addClass("moderate");
+                    };
+                    currentIcon3();
                     break;
                 case 'broken clouds':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/04d.png\n" + "></center></p>");
+                    function currentIcon4() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/04d.png";
+                        $("#conditionStyle1").addClass("moderate");
+                    };
+                    currentIcon4();
                     break;
                 case 'shower rain':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/09d.png\n" + "></center></p>");
+                    function currentIcon5() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/09d.png";
+                        $("#conditionStyle1").addClass("severe");
+                    };
+                    currentIcon5();
                     break;
                 case 'rain':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/10d.png\n" + "></center></p>");
+                    function currentIcon6() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/10d.png";
+                        $("#conditionStyle1").addClass("moderate");
+                    };
+                    currentIcon6();
                     break;
                 case 'thunderstorm':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/11d.png\n" + "></center></p>");
+                    function currentIcon7() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/11d.png";
+                        $("#conditionStyle1").addClass("severe");
+                    };
+                    currentIcon7();
                     break;
                 case 'snow':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/13d.png\n" + "></center></p>");
+                    function currentIcon8() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/13d.png";
+                        $("#conditionStyle1").addClass("severe");
+                    };
+                    currentIcon8();
                     break;
                 case 'mist':
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/50d.png\n" + "></center></p>");
+                    function currentIcon9() {
+                        document.getElementById("weatherIcon1").src = "http://openweathermap.org/img/wn/50d.png";
+                        $("#conditionStyle1").addClass("severe");
+                    };
+                    currentIcon9();
                     break;
                 default:
-                    $("#weatherIcon1").replaceWith("<p><center><img src=\n" + "./assets/images/zombies.jpg\n" + "></center></p>");
+                    function currentIcon10() {
+                        document.getElementById("weatherIcon1").src = "./assets/images/zombies.jpg";
+                        $("#conditionStyle1").addClass("severe");
+                    };
+                    currentIcon10();
                     break;
             };
 
-            document.getElementById("#foreCast1").innerHTML =
+            document.getElementById("foreCast1").innerHTML =
                 date1 + "<br />" +
                 "Condition: " + description1 + "<br />" +
                 "Humidity: " + humidity1 + "<br />" +
@@ -129,38 +246,78 @@ function citySearch() {
             var conditionsD2 = description2;
             switch (conditionsD2) {
                 case 'clear sky':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/01d.png\n" + "></center></p>");
+                    function currentIcon1() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/01d.png";
+                        $("#conditionStyle2").addClass("favorable");
+                    };
+                    currentIcon1();
                     break;
                 case 'few clouds':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/02d.png\n" + "></center></p>");
+                    function currentIcon2() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/02d.png";
+                        $("#conditionStyle2").addClass("favorable");
+                    };
+                    currentIcon2();
                     break;
                 case 'scattered clouds':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/03d.png\n" + "></center></p>");
+                    function currentIcon3() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/03d.png";
+                        $("#conditionStyle2").addClass("moderate");
+                    };
+                    currentIcon3();
                     break;
                 case 'broken clouds':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/04d.png\n" + "></center></p>");
+                    function currentIcon4() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/04d.png";
+                        $("#conditionStyle2").addClass("moderate");
+                    };
+                    currentIcon4();
                     break;
                 case 'shower rain':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/09d.png\n" + "></center></p>");
+                    function currentIcon5() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/09d.png";
+                        $("#conditionStyle2").addClass("severe");
+                    };
+                    currentIcon5();
                     break;
                 case 'rain':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/10d.png\n" + "></center></p>");
+                    function currentIcon6() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/10d.png";
+                        $("#conditionStyle2").addClass("moderate");
+                    };
+                    currentIcon6();
                     break;
                 case 'thunderstorm':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/11d.png\n" + "></center></p>");
+                    function currentIcon7() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/11d.png";
+                        $("#conditionStyle2").addClass("severe");
+                    };
+                    currentIcon7();
                     break;
                 case 'snow':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/13d.png\n" + "></center></p>");
+                    function currentIcon8() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/13d.png";
+                        $("#conditionStyle2").addClass("severe");
+                    };
+                    currentIcon8();
                     break;
                 case 'mist':
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/50d.png\n" + "></center></p>");
+                    function currentIcon9() {
+                        document.getElementById("weatherIcon2").src = "http://openweathermap.org/img/wn/50d.png";
+                        $("#conditionStyle2").addClass("severe");
+                    };
+                    currentIcon9();
                     break;
                 default:
-                    $("#weatherIcon2").replaceWith("<p><center><img src=\n" + "./assets/images/zombies.jpg\n" + "></center></p>");
+                    function currentIcon10() {
+                        document.getElementById("weatherIcon2").src = "./assets/images/zombies.jpg";
+                        $("#conditionStyle2").addClass("severe");
+                    };
+                    currentIcon10();
                     break;
             };
 
-            document.getElementById("#foreCast2").innerHTML =
+            document.getElementById("foreCast2").innerHTML =
                 date2 + "<br />" +
                 "Condition: " + description2 + "<br />" +
                 "Humidity: " + humidity2 + "<br />" +
@@ -188,38 +345,78 @@ function citySearch() {
             var conditionsD3 = description3;
             switch (conditionsD3) {
                 case 'clear sky':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/01d.png\n" + "></center></p>");
+                    function currentIcon1() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/01d.png";
+                        $("#conditionStyle3").addClass("favorable");
+                    };
+                    currentIcon1();
                     break;
                 case 'few clouds':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/02d.png\n" + "></center></p>");
+                    function currentIcon2() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/02d.png";
+                        $("#conditionStyle3").addClass("favorable");
+                    };
+                    currentIcon2();
                     break;
                 case 'scattered clouds':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/03d.png\n" + "></center></p>");
+                    function currentIcon3() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/03d.png";
+                        $("#conditionStyle3").addClass("moderate");
+                    };
+                    currentIcon3();
                     break;
                 case 'broken clouds':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/04d.png\n" + "></center></p>");
+                    function currentIcon4() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/04d.png";
+                        $("#conditionStyle3").addClass("moderate");
+                    };
+                    currentIcon4();
                     break;
                 case 'shower rain':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/09d.png\n" + "></center></p>");
+                    function currentIcon5() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/09d.png";
+                        $("#conditionStyle3").addClass("severe");
+                    };
+                    currentIcon5();
                     break;
                 case 'rain':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/10d.png\n" + "></center></p>");
+                    function currentIcon6() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/10d.png";
+                        $("#conditionStyle3").addClass("moderate");
+                    };
+                    currentIcon6();
                     break;
                 case 'thunderstorm':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/11d.png\n" + "></center></p>");
+                    function currentIcon7() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/11d.png";
+                        $("#conditionStyle3").addClass("severe");
+                    };
+                    currentIcon7();
                     break;
                 case 'snow':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/13d.png\n" + "></center></p>");
+                    function currentIcon8() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/13d.png";
+                        $("#conditionStyle3").addClass("severe");
+                    };
+                    currentIcon8();
                     break;
                 case 'mist':
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/50d.png\n" + "></center></p>");
+                    function currentIcon9() {
+                        document.getElementById("weatherIcon3").src = "http://openweathermap.org/img/wn/50d.png";
+                        $("#conditionStyle3").addClass("severe");
+                    };
+                    currentIcon9();
                     break;
                 default:
-                    $("#weatherIcon3").replaceWith("<p><center><img src=\n" + "./assets/images/zombies.jpg\n" + "></center></p>");
+                    function currentIcon10() {
+                        document.getElementById("weatherIcon3").src = "./assets/images/zombies.jpg";
+                        $("#conditionStyle3").addClass("severe");
+                    };
+                    currentIcon10();
                     break;
             };
 
-            document.getElementById("#foreCast3").innerHTML =
+            document.getElementById("foreCast3").innerHTML =
                 date3 + "<br />" +
                 "Condition: " + description3 + "<br />" +
                 "Humidity: " + humidity3 + "<br />" +
@@ -247,38 +444,78 @@ function citySearch() {
             var conditionsD4 = description4;
             switch (conditionsD4) {
                 case 'clear sky':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/01d.png\n" + "></center></p>");
+                    function currentIcon1() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/01d.png";
+                        $("#conditionStyle4").addClass("favorable");
+                    };
+                    currentIcon1();
                     break;
                 case 'few clouds':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/02d.png\n" + "></center></p>");
+                    function currentIcon2() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/02d.png";
+                        $("#conditionStyle4").addClass("favorable");
+                    };
+                    currentIcon2();
                     break;
                 case 'scattered clouds':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/03d.png\n" + "></center></p>");
+                    function currentIcon3() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/03d.png";
+                        $("#conditionStyle4").addClass("moderate");
+                    };
+                    currentIcon3();
                     break;
                 case 'broken clouds':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/04d.png\n" + "></center></p>");
+                    function currentIcon4() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/04d.png";
+                        $("#conditionStyle4").addClass("moderate");
+                    };
+                    currentIcon4();
                     break;
                 case 'shower rain':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/09d.png\n" + "></center></p>");
+                    function currentIcon5() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/09d.png";
+                        $("#conditionStyle4").addClass("severe");
+                    };
+                    currentIcon5();
                     break;
                 case 'rain':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/10d.png\n" + "></center></p>");
+                    function currentIcon6() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/10d.png";
+                        $("#conditionStyle4").addClass("moderate");
+                    };
+                    currentIcon6();
                     break;
                 case 'thunderstorm':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/11d.png\n" + "></center></p>");
+                    function currentIcon7() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/11d.png";
+                        $("#conditionStyle4").addClass("severe");
+                    };
+                    currentIcon7();
                     break;
                 case 'snow':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/13d.png\n" + "></center></p>");
+                    function currentIcon8() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/13d.png";
+                        $("#conditionStyle4").addClass("severe");
+                    };
+                    currentIcon8();
                     break;
                 case 'mist':
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/50d.png\n" + "></center></p>");
+                    function currentIcon9() {
+                        document.getElementById("weatherIcon4").src = "http://openweathermap.org/img/wn/50d.png";
+                        $("#conditionStyle4").addClass("severe");
+                    };
+                    currentIcon9();
                     break;
                 default:
-                    $("#weatherIcon4").replaceWith("<p><center><img src=\n" + "./assets/images/zombies.jpg\n" + "></center></p>");
+                    function currentIcon10() {
+                        document.getElementById("weatherIcon4").src = "./assets/images/zombies.jpg";
+                        $("#conditionStyle4").addClass("severe");
+                    };
+                    currentIcon10();
                     break;
             };
 
-            document.getElementById("#foreCast4").innerHTML =
+            document.getElementById("foreCast4").innerHTML =
                 date4 + "<br />" +
                 "Condition: " + description4 + "<br />" +
                 "Humidity: " + humidity4 + "<br />" +
@@ -306,38 +543,78 @@ function citySearch() {
             var conditionsD5 = description5;
             switch (conditionsD5) {
                 case 'clear sky':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/01d.png\n" + "></center></p>");
+                    function currentIcon1() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/01d.png";
+                        $("#conditionStyle5").addClass("favorable");
+                    };
+                    currentIcon1();
                     break;
                 case 'few clouds':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/02d.png\n" + "></center></p>");
+                    function currentIcon2() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/02d.png";
+                        $("#conditionStyle5").addClass("favorable");
+                    };
+                    currentIcon2();
                     break;
                 case 'scattered clouds':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/03d.png\n" + "></center></p>");
+                    function currentIcon3() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/03d.png";
+                        $("#conditionStyle5").addClass("moderate");
+                    };
+                    currentIcon3();
                     break;
                 case 'broken clouds':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/04d.png\n" + "></center></p>");
+                    function currentIcon4() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/04d.png";
+                        $("#conditionStyle5").addClass("moderate");
+                    };
+                    currentIcon4();
                     break;
                 case 'shower rain':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/09d.png\n" + "></center></p>");
+                    function currentIcon5() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/09d.png";
+                        $("#conditionStyle5").addClass("severe");
+                    };
+                    currentIcon5();
                     break;
                 case 'rain':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/10d.png\n" + "></center></p>");
+                    function currentIcon6() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/10d.png";
+                        $("#conditionStyle5").addClass("moderate");
+                    };
+                    currentIcon6();
                     break;
                 case 'thunderstorm':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/11d.png\n" + "></center></p>");
+                    function currentIcon7() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/11d.png";
+                        $("#conditionStyle5").addClass("severe");
+                    };
+                    currentIcon7();
                     break;
                 case 'snow':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/13d.png\n" + "></center></p>");
+                    function currentIcon8() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/13d.png";
+                        $("#conditionStyle5").addClass("severe");
+                    };
+                    currentIcon8();
                     break;
                 case 'mist':
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "http://openweathermap.org/img/wn/50d.png\n" + "></center></p>");
+                    function currentIcon9() {
+                        document.getElementById("weatherIcon5").src = "http://openweathermap.org/img/wn/50d.png";
+                        $("#conditionStyle5").addClass("severe");
+                    };
+                    currentIcon9();
                     break;
                 default:
-                    $("#weatherIcon5").replaceWith("<p><center><img src=\n" + "./assets/images/zombies.jpg\n" + "></center></p>");
+                    function currentIcon10() {
+                        document.getElementById("weatherIcon5").src = "./assets/images/zombies.jpg";
+                        $("#conditionStyle5").addClass("severe");
+                    };
+                    currentIcon10();
                     break;
             };
 
-            document.getElementById("#foreCast5").innerHTML =
+            document.getElementById("foreCast5").innerHTML =
                 date5 + "<br />" +
                 "Condition: " + description5 + "<br />" +
                 "Humidity: " + humidity5 + "<br />" +

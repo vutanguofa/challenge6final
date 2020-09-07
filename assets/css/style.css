@@ -1,5 +1,15 @@
-.style {
-  border: 5px outset red;
-  background-color: lightblue;
-  text-align: center;
+.padding {
+  padding: 5px 5px 5px 5px;
+}
+
+.favorable {
+  background-color: #228B22;
+}
+
+.moderate {
+  background-color: #FFFF00;
+}
+
+.severe {
+  background-color: #ca4327;
 }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Weather Dashboard</title>
-
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Import Bootstrap CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
 </head>
@@ -17,78 +17,79 @@
         <span class="navbar-brand mb-1 ">
             <h1>Weather Dashboard</h1>
         </span>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     </header>
     <!-- End Nav -->
-    <main class="container">
+    <main class="container padding">
         <!-- City search and history-->
         <div class="row">
             <div class="col-md-8">
-                <div class="row">
+                <div class="row ">
                     <div class="col-md-4">
                         <h3>Search for a city</h3>
                         <label for="searchCity"></label>
                         <input type="text" id="searchCity" /><br />
-                        <br /><button id="myBtn">Search!</button><br />
+                        <br /><button id="myBtn">Search</button><br />
                         <br /><div id="prevSearch"></div>
                     </div>
                     <div class="col-md-8">
                         <!-- Current forecast -->
-                        <p id="currentIcon"><img src=""></p>
-                        <p id="#currentWeather"></p>
+                        <img id="currentIcon" src="">
+                        <p id="currentWeather"></p>
+                        <p id="uvCondition" class="conditionStyle"></p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 5-day forecast-->
-        <div class="container">
+        <div class="container padding">
             <div class="row">
                 <!-- Forecast 1 -->
-                <div class="col-sm-2">
+                <div id="conditionStyle1" class="col-sm-2">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <p id="weatherIcon1"><img src=""></p>
-                            <p id="#foreCast1" class="card-text"></p>
+                            <img id="weatherIcon1" src="">
+                            <p id="foreCast1" class="card-text"></p>
                         </div>
                     </div>
                 </div>
                 <!-- Forecast 2 -->
-                <div class="col-sm-2">
+                <div id="conditionStyle2" class="col-sm-2">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <p id="weatherIcon2"><img src=""></p>
-                            <p id="#foreCast2" class="card-text"></p>
+                            <img id="weatherIcon2" src="">
+                            <p id="foreCast2" class="card-text"></p>
                         </div>
                     </div>
                 </div>
                 <!-- Forecast 3 -->
-                <div class="col-sm-2">
+                <div id="conditionStyle3" class="col-sm-2">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <p id="weatherIcon3"><img src=""></p>
-                            <p id="#foreCast3" class="card-text"></p>
+                            <img id="weatherIcon3" src="">
+                            <p id="foreCast3" class="card-text"></p>
                         </div>
                     </div>
                 </div>
                 <!-- Forecast 4 -->
-                <div class="col-sm-2">
+                <div id="conditionStyle4" class="col-sm-2">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <p id="weatherIcon4"><img src=""></p>
-                            <p id="#foreCast4" class="card-text"></p>
+                            <img id="weatherIcon4" src="">
+                            <p id="foreCast4" class="card-text"></p>
                         </div>
                     </div>
                 </div>
                 <!-- Forecast 5 -->
-                <div class="col-sm-2">
+                <div id="conditionStyle5" class="col-sm-2">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <p id="weatherIcon5"><img src=""></p>
-                            <p id="#foreCast5" class="card-text"></p>
+                            <img id="weatherIcon5" src="">
+                            <p id="foreCast5" class="card-text"></p>
                         </div>
                     </div>
                 </div>
